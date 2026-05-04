@@ -1,17 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Security Scripting</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Scripting</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #020617;
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #1e293b;
+  position: fixed;
+}
+
+.sidebar h1 {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #38bdf8;
+}
+
+.sidebar a {
+  display: block;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.sidebar a:hover {
+  color: #38bdf8;
+}
+
+/* Main content */
+.main {
+  margin-left: 240px;
+  padding: 40px;
+  width: 100%;
+}
+
+/* Header */
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.header p {
+  color: #94a3b8;
+  margin-top: 5px;
+}
+
+/* Cards */
+.grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  border-color: #38bdf8;
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #38bdf8;
+}
+
+.card p {
+  font-size: 14px;
+  color: #94a3b8;
+}
+</style>
 </head>
+
 <body>
 
+<!-- Sidebar -->
+<div class="sidebar">
   <h1>Security Scripting</h1>
-  <p>Open-source tools for AppSec, Blue Team, and AI threat modeling.</p>
 
-  <h2>Tools</h2>
-  <ul>
-    <li><a href="/deepprobe">DeepProbe</a></li>
-  </ul>
+  <a href="/">🏠 Home</a>
+  <a href="/tools">🛠 Tools</a>
+  <a href="/articles">📝 Technical Blog</a>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <div class="header">
+    <h2>Security Tools</h2>
+    <p>Open-source tools for AppSec, Blue Team, and AI threat modeling</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- DeepProbe -->
+    <div class="card" onclick="window.location.href='https://github.com/purplesectools/DeepProbe'">
+      <h3>DeepProbe</h3>
+      <p>Memory forensics automation tool for detecting advanced attacker techniques.</p>
+    </div>
+
+    <!-- AI Threat Modeling -->
+    <div class="card" onclick="window.location.href='/aimlthreats'">
+      <h3>AI Threat Modeling</h3>
+      <p>Tool for mapping AI risks to OWASP ML Top 10, MITRE ATLAS, and NIST.</p>
+    </div>
+
+    <!-- Future Tool -->
+    <div class="card">
+      <h3>Coming Soon</h3>
+      <p>More AppSec and AI security tools will be added here.</p>
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 </html>
