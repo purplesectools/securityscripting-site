@@ -92,10 +92,54 @@ body {
   font-size: 14px;
   color: #94a3b8;
 }
+
+/* Loader Overlay */
+#loaderOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 6, 23, 0.96);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #1e293b;
+  border-top: 5px solid #38bdf8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loader-text {
+  margin-top: 20px;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
 </head>
 
 <body>
+
+<!-- Loader -->
+<div id="loaderOverlay">
+  <div class="loader"></div>
+  <div class="loader-text">
+    Initializing AI Threat Modeling Engine...
+  </div>
+</div>
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -123,7 +167,7 @@ body {
     </div>
 
     <!-- AI Threat Modeling -->
-    <div class="card" onclick="window.location.href='/aimlthreats'">
+    <div class="card" onclick="openThreatModelingTool()">
       <h3>AI Threat Modeling</h3>
       <p>Tool for mapping AI risks to OWASP ML Top 10, MITRE ATLAS, and NIST.</p>
     </div>
@@ -137,6 +181,31 @@ body {
   </div>
 
 </div>
+
+<script>
+const AIML_URL = "https://aimlthreats.com";
+
+/* Wake up Render app silently when page opens */
+fetch(AIML_URL, {
+  mode: "no-cors"
+}).catch(() => {});
+
+/* Loader + delayed redirect */
+function openThreatModelingTool() {
+
+  document.getElementById("loaderOverlay").style.display = "flex";
+
+  /* Trigger another wakeup ping */
+  fetch(AIML_URL, {
+    mode: "no-cors"
+  }).catch(() => {});
+
+  /* Wait 20 seconds before redirect */
+  setTimeout(() => {
+    window.location.href = AIML_URL;
+  }, 20000);
+}
+</script>
 
 </body>
 </html>
