@@ -26,7 +26,7 @@ body {
 }
 
 .sidebar h1 {
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 30px;
   color: #38bdf8;
 }
@@ -37,60 +37,105 @@ body {
   text-decoration: none;
   margin-bottom: 15px;
   font-size: 14px;
+  transition: 0.2s ease;
 }
 
 .sidebar a:hover {
   color: #38bdf8;
 }
 
-/* Main content */
+/* Main */
 .main {
   margin-left: 240px;
   padding: 40px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Header */
 .header h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 30px;
 }
 
 .header p {
   color: #94a3b8;
-  margin-top: 5px;
+  margin-top: 8px;
+  max-width: 700px;
+  line-height: 1.6;
 }
 
-/* Cards */
-.grid {
-  margin-top: 30px;
+/* Top Cards */
+.hero-grid {
+  margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 25px;
 }
 
+/* Standard Grid */
+.grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+/* Card */
 .card {
-  background: #020617;
+  background: linear-gradient(145deg, #020617, #0b1220);
   border: 1px solid #1e293b;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 14px;
+  padding: 28px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
   border-color: #38bdf8;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.12);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(56, 189, 248, 0.05);
+  border-radius: 50%;
+  top: -30px;
+  right: -30px;
 }
 
 .card h3 {
   margin-top: 0;
+  font-size: 24px;
   color: #38bdf8;
 }
 
 .card p {
-  font-size: 14px;
+  font-size: 15px;
   color: #94a3b8;
+  line-height: 1.7;
+}
+
+.tags {
+  margin-top: 20px;
+}
+
+.tag {
+  display: inline-block;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  color: #38bdf8;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 /* Loader Overlay */
@@ -109,8 +154,8 @@ body {
 }
 
 .loader {
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border: 5px solid #1e293b;
   border-top: 5px solid #38bdf8;
   border-radius: 50%;
@@ -118,14 +163,38 @@ body {
 }
 
 .loader-text {
-  margin-top: 20px;
+  margin-top: 25px;
   color: #94a3b8;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -154,28 +223,72 @@ body {
 <div class="main">
 
   <div class="header">
-    <h2>Security Tools</h2>
-    <p>Open-source tools for AppSec, Blue Team, and AI threat modeling</p>
+    <h2>Security Tools & Research</h2>
+    <p>
+      Open-source offensive security, DFIR, AppSec, and AI security tooling focused on practical security engineering, automation, and modern attack surface analysis.
+    </p>
   </div>
 
-  <div class="grid">
+  <!-- Top Featured Tools -->
+  <div class="hero-grid">
 
     <!-- DeepProbe -->
     <div class="card" onclick="window.location.href='https://github.com/purplesectools/DeepProbe'">
+
       <h3>DeepProbe</h3>
-      <p>Memory forensics automation tool for detecting advanced attacker techniques.</p>
+
+      <p>
+        Advanced memory forensics automation framework designed to accelerate DFIR investigations and detect stealthy attacker behavior including LOLBins, injected processes, persistence artifacts, suspicious network activity, and modern post-exploitation tradecraft.
+      </p>
+
+      <div class="tags">
+        <span class="tag">DFIR</span>
+        <span class="tag">Memory Forensics</span>
+        <span class="tag">Volatility</span>
+        <span class="tag">Threat Hunting</span>
+      </div>
+
     </div>
 
     <!-- AI Threat Modeling -->
     <div class="card" onclick="openThreatModelingTool()">
+
       <h3>AI Threat Modeling</h3>
-      <p>Tool for mapping AI risks to OWASP ML Top 10, MITRE ATLAS, and NIST.</p>
+
+      <p>
+        Interactive AI security threat modeling platform that maps risks against OWASP ML/LLM Top 10, MITRE ATLAS, and NIST AI guidance. Designed to help developers and security teams analyze AI attack paths, abuse cases, and architectural weaknesses.
+      </p>
+
+      <div class="tags">
+        <span class="tag">AI Security</span>
+        <span class="tag">Threat Modeling</span>
+        <span class="tag">MITRE ATLAS</span>
+        <span class="tag">OWASP ML Top 10</span>
+      </div>
+
     </div>
 
-    <!-- Future Tool -->
-    <div class="card">
-      <h3>Coming Soon</h3>
-      <p>More AppSec and AI security tools will be added here.</p>
+  </div>
+
+  <!-- Lower Section -->
+  <div class="grid">
+
+    <!-- Zero Trust AppSec -->
+    <div class="card" onclick="window.location.href='/zerotrustappsec'">
+
+      <h3>Zero Trust AppSec</h3>
+
+      <p>
+        Interactive visualization and assessment project exploring Zero Trust principles in modern application security architectures, identity-aware systems, segmented trust boundaries, secure pipelines, and adaptive access enforcement models.
+      </p>
+
+      <div class="tags">
+        <span class="tag">Zero Trust</span>
+        <span class="tag">Application Security</span>
+        <span class="tag">Architecture</span>
+        <span class="tag">Security Engineering</span>
+      </div>
+
     </div>
 
   </div>
@@ -185,7 +298,7 @@ body {
 <script>
 const AIML_URL = "https://aimlthreats.com";
 
-/* Wake up Render app silently when page opens */
+/* Silent wakeup ping */
 fetch(AIML_URL, {
   mode: "no-cors"
 }).catch(() => {});
@@ -195,12 +308,10 @@ function openThreatModelingTool() {
 
   document.getElementById("loaderOverlay").style.display = "flex";
 
-  /* Trigger another wakeup ping */
   fetch(AIML_URL, {
     mode: "no-cors"
   }).catch(() => {});
 
-  /* Wait 20 seconds before redirect */
   setTimeout(() => {
     window.location.href = AIML_URL;
   }, 20000);
