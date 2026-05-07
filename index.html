@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Security Scripting</title>
+
+<title>Security Scripting | Memory Forensics, AI Threat Modeling & Zero Trust AppSec</title>
+
+<meta name="description" content="Security Scripting provides open-source cybersecurity tools and research for memory forensics, DFIR, AI threat modeling, OWASP ML Top 10, MITRE ATLAS, and Zero Trust Application Security.">
+
+<meta name="keywords" content="memory forensics, DFIR, AI threat modeling, OWASP ML Top 10, MITRE ATLAS, Zero Trust AppSec, cybersecurity tools, volatility, digital forensics, AI security, application security">
+
+<meta name="author" content="Security Scripting">
+
+<meta property="og:title" content="Security Scripting">
+<meta property="og:description" content="Open-source cybersecurity tools for memory forensics, DFIR, AI security, and Zero Trust engineering.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://securityscripting.com">
 
 <style>
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -15,6 +29,7 @@ body {
 }
 
 /* Sidebar */
+
 .sidebar {
   width: 240px;
   height: 100vh;
@@ -45,6 +60,7 @@ body {
 }
 
 /* Main */
+
 .main {
   margin-left: 240px;
   padding: 40px;
@@ -53,19 +69,21 @@ body {
 }
 
 /* Header */
-.header h2 {
+
+.header h1 {
   margin: 0;
-  font-size: 30px;
+  font-size: 34px;
 }
 
 .header p {
   color: #94a3b8;
-  margin-top: 8px;
-  max-width: 700px;
-  line-height: 1.6;
+  margin-top: 10px;
+  max-width: 850px;
+  line-height: 1.8;
 }
 
-/* Top Cards */
+/* Featured Grid */
+
 .hero-grid {
   margin-top: 40px;
   display: grid;
@@ -73,7 +91,8 @@ body {
   gap: 25px;
 }
 
-/* Standard Grid */
+/* Lower Grid */
+
 .grid {
   margin-top: 40px;
   display: grid;
@@ -81,16 +100,24 @@ body {
   gap: 25px;
 }
 
-/* Card */
+/* Card Link */
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Cards */
+
 .card {
   background: linear-gradient(145deg, #020617, #0b1220);
   border: 1px solid #1e293b;
   border-radius: 14px;
   padding: 28px;
-  cursor: pointer;
   transition: 0.25s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -110,7 +137,7 @@ body {
   right: -30px;
 }
 
-.card h3 {
+.card h2 {
   margin-top: 0;
   font-size: 24px;
   color: #38bdf8;
@@ -119,8 +146,10 @@ body {
 .card p {
   font-size: 15px;
   color: #94a3b8;
-  line-height: 1.7;
+  line-height: 1.8;
 }
+
+/* Tags */
 
 .tags {
   margin-top: 20px;
@@ -138,7 +167,25 @@ body {
   margin-bottom: 8px;
 }
 
-/* Loader Overlay */
+/* SEO Content */
+
+.seo-content {
+  margin-top: 70px;
+  line-height: 1.9;
+}
+
+.seo-content h2 {
+  color: #38bdf8;
+  margin-top: 45px;
+}
+
+.seo-content p {
+  color: #94a3b8;
+  max-width: 1000px;
+}
+
+/* Loader */
+
 #loaderOverlay {
   position: fixed;
   top: 0;
@@ -175,6 +222,7 @@ body {
 }
 
 /* Responsive */
+
 @media(max-width: 900px) {
 
   body {
@@ -197,12 +245,14 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
 </style>
 </head>
 
 <body>
 
 <!-- Loader -->
+
 <div id="loaderOverlay">
   <div class="loader"></div>
   <div class="loader-text">
@@ -211,99 +261,150 @@ body {
 </div>
 
 <!-- Sidebar -->
+
 <div class="sidebar">
+
   <h1>Security Scripting</h1>
 
   <a href="/">🏠 Home</a>
   <a href="/tools">🛠 Tools</a>
   <a href="/articles">📝 Technical Blog</a>
+
 </div>
 
 <!-- Main -->
+
 <div class="main">
 
   <div class="header">
-    <h2>Security Tools & Research</h2>
+
+    <h1>Security Research, DFIR & AI Security Tooling</h1>
+
     <p>
-      Open-source offensive security, DFIR, AppSec, and AI security tooling focused on practical security engineering, automation, and modern attack surface analysis.
+      Security Scripting provides open-source cybersecurity tools and research focused on memory forensics, digital forensics and incident response (DFIR), AI threat modeling, Zero Trust Application Security, and modern security engineering workflows.
     </p>
+
   </div>
 
   <!-- Top Featured Tools -->
+
   <div class="hero-grid">
 
     <!-- DeepProbe -->
-    <div class="card" onclick="window.location.href='https://github.com/purplesectools/DeepProbe'">
 
-      <h3>DeepProbe</h3>
+    <a class="card-link" href="https://github.com/purplesectools/DeepProbe">
 
-      <p>
-        Advanced memory forensics automation framework designed to accelerate DFIR investigations and detect stealthy attacker behavior including LOLBins, injected processes, persistence artifacts, suspicious network activity, and modern post-exploitation tradecraft.
-      </p>
+      <div class="card">
 
-      <div class="tags">
-        <span class="tag">DFIR</span>
-        <span class="tag">Memory Forensics</span>
-        <span class="tag">Volatility</span>
-        <span class="tag">Threat Hunting</span>
+        <h2>DeepProbe</h2>
+
+        <p>
+          Advanced memory forensics and DFIR automation framework designed to accelerate investigations and identify stealthy attacker behavior including injected processes, persistence artifacts, suspicious network activity, LOLBins, malware execution patterns, and modern post-exploitation techniques.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Memory Forensics</span>
+          <span class="tag">DFIR</span>
+          <span class="tag">Volatility</span>
+          <span class="tag">Threat Hunting</span>
+        </div>
+
       </div>
 
-    </div>
+    </a>
 
     <!-- AI Threat Modeling -->
-    <div class="card" onclick="openThreatModelingTool()">
 
-      <h3>AI Threat Modeling</h3>
+    <a class="card-link" href="javascript:void(0);" onclick="openThreatModelingTool()">
 
-      <p>
-        Interactive AI security threat modeling platform that maps risks against OWASP ML/LLM Top 10, MITRE ATLAS, and NIST AI guidance. Designed to help developers and security teams analyze AI attack paths, abuse cases, and architectural weaknesses.
-      </p>
+      <div class="card">
 
-      <div class="tags">
-        <span class="tag">AI Security</span>
-        <span class="tag">Threat Modeling</span>
-        <span class="tag">MITRE ATLAS</span>
-        <span class="tag">OWASP ML Top 10</span>
+        <h2>AI Threat Modeling</h2>
+
+        <p>
+          Interactive AI security threat modeling platform for analyzing AI attack surfaces using OWASP ML Top 10, MITRE ATLAS, and NIST AI guidance. Designed to help developers and security teams identify prompt injection risks, model abuse cases, data poisoning scenarios, and AI architectural weaknesses.
+        </p>
+
+        <div class="tags">
+          <span class="tag">AI Security</span>
+          <span class="tag">MITRE ATLAS</span>
+          <span class="tag">OWASP ML Top 10</span>
+          <span class="tag">Threat Modeling</span>
+        </div>
+
       </div>
 
-    </div>
+    </a>
 
   </div>
 
   <!-- Lower Section -->
+
   <div class="grid">
 
     <!-- Zero Trust AppSec -->
-    <div class="card" onclick="window.location.href='/zerotrustappsec'">
 
-      <h3>Zero Trust AppSec</h3>
+    <a class="card-link" href="/zerotrustappsec">
 
-      <p>
-        Interactive visualization and assessment project exploring Zero Trust principles in modern application security architectures, identity-aware systems, segmented trust boundaries, secure pipelines, and adaptive access enforcement models.
-      </p>
+      <div class="card">
 
-      <div class="tags">
-        <span class="tag">Zero Trust</span>
-        <span class="tag">Application Security</span>
-        <span class="tag">Architecture</span>
-        <span class="tag">Security Engineering</span>
+        <h2>Zero Trust AppSec</h2>
+
+        <p>
+          Interactive Zero Trust Application Security visualization and assessment project exploring identity-aware systems, segmented trust boundaries, adaptive access enforcement, secure CI/CD pipelines, microsegmentation, and modern Zero Trust security architectures.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Zero Trust</span>
+          <span class="tag">Application Security</span>
+          <span class="tag">Architecture</span>
+          <span class="tag">Security Engineering</span>
+        </div>
+
       </div>
 
-    </div>
+    </a>
 
   </div>
+
+  <!-- SEO Content -->
+
+  <section class="seo-content">
+
+    <h2>Memory Forensics and DFIR Research</h2>
+
+    <p>
+      DeepProbe focuses on memory forensics automation, malware detection, incident response workflows, persistence analysis, Volatility-based investigations, and detection of advanced attacker tradecraft. The project explores modern DFIR techniques for identifying stealthy compromise indicators directly from volatile memory.
+    </p>
+
+    <h2>AI Threat Modeling and AI Security</h2>
+
+    <p>
+      The AI Threat Modeling platform helps security teams analyze AI attack surfaces using OWASP ML Top 10, MITRE ATLAS, NIST AI RMF, prompt injection testing methodologies, model abuse cases, AI supply chain threats, and LLM security engineering practices.
+    </p>
+
+    <h2>Zero Trust Application Security</h2>
+
+    <p>
+      ZTAppSec explores Zero Trust principles for modern application security including identity-centric architectures, least privilege enforcement, secure software pipelines, segmented trust boundaries, adaptive access controls, and resilient cloud-native security engineering.
+    </p>
+
+  </section>
 
 </div>
 
 <script>
+
 const AIML_URL = "https://aimlthreats.com";
 
 /* Silent wakeup ping */
+
 fetch(AIML_URL, {
   mode: "no-cors"
 }).catch(() => {});
 
 /* Loader + delayed redirect */
+
 function openThreatModelingTool() {
 
   document.getElementById("loaderOverlay").style.display = "flex";
@@ -316,6 +417,7 @@ function openThreatModelingTool() {
     window.location.href = AIML_URL;
   }, 20000);
 }
+
 </script>
 
 </body>
