@@ -10,9 +10,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .gradient-text { background: linear-gradient(90deg, #6366f1, #a855f7); -we bkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-text { background: linear-gradient(90deg, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-bg { background: radial-gradient(circle at top right, #1e1b4b, #0f172a); }
         .feature-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        img { background-color: #1e293b; } /* Prevents "empty" look while loading */
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 antialiased">
@@ -42,26 +43,34 @@
         </div>
     </nav>
 
-    <!-- Hero Section: Updated with Medium Article Hook -->
+    <!-- Hero Section -->
     <header class="relative pt-40 pb-24 overflow-hidden hero-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-4xl mx-auto">
-                <div class="inline-block px-4 py-1 mb-6 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase tracking-widest">
-                    OWASP SAMM + NIST Zero Trust
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <div class="inline-block px-4 py-1 mb-6 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase tracking-widest">
+                        OWASP SAMM + NIST Zero Trust
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-tight leading-[1.1]">
+                        How Mature is Your <span class="gradient-text">AppSec Program?</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 mb-10 leading-relaxed font-light">
+                        A lightweight, self-contained way to measure organizational security maturity and bridge the gap between compliance and modern Zero Trust architecture.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-6">
+                        <a href="https://purplesectools.github.io/ztappsec/" target="_blank" class="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-500 transition-all flex items-center justify-center shadow-2xl shadow-indigo-500/25">
+                            Start Assessment <i class="fas fa-arrow-right ml-3"></i>
+                        </a>
+                        <a href="https://github.com/purplesectools/ztappsec/" target="_blank" class="px-10 py-5 bg-slate-800 text-white rounded-2xl font-bold text-lg border border-slate-700 hover:bg-slate-700 transition-all flex items-center justify-center">
+                            <i class="fab fa-github mr-3 text-xl"></i> Star on GitHub
+                        </a>
+                    </div>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-tight leading-[1.1]">
-                    How Mature is Your <span class="gradient-text">AppSec Program?</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-400 mb-12 leading-relaxed font-light">
-                    A lightweight, self-contained way to measure organizational security maturity and bridge the gap between compliance and modern Zero Trust architecture.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-6">
-                    <a href="https://purplesectools.github.io/ztappsec/" target="_blank" class="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-500 transition-all flex items-center justify-center shadow-2xl shadow-indigo-500/25">
-                        Start Assessment <i class="fas fa-arrow-right ml-3"></i>
-                    </a>
-                    <a href="https://github.com/purplesectools/ztappsec/" target="_blank" class="px-10 py-5 bg-slate-800 text-white rounded-2xl font-bold text-lg border border-slate-700 hover:bg-slate-700 transition-all flex items-center justify-center">
-                        <i class="fab fa-github mr-3 text-xl"></i> Star on GitHub
-                    </a>
+                <div class="lg:w-1/2 relative group">
+                    <div class="absolute -inset-4 bg-indigo-500/20 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition duration-1000"></div>
+                    <img src="images/1*oMSutvgYZqTIpmiv97c_qw.png" 
+                         class="relative rounded-2xl border border-white/10 shadow-2xl transition duration-500 transform group-hover:scale-[1.01]" 
+                         alt="AppSecMeter UI">
                 </div>
             </div>
         </div>
@@ -94,12 +103,13 @@
                     </div>
                 </div>
                 <div class="relative group">
-                    <img src="https://raw.githubusercontent.com/purplesectools/ztappsec/main/screenshots/executive_summary.jpg" 
-                         onerror="this.src='https://images.unsplash.com/photo-1551288049-bbda48658ad0?auto=format&fit=crop&q=80&w=800'"
-                         class="rounded-2xl border border-white/10 shadow-2xl transition group-hover:scale-[1.02] duration-500" alt="AppSecMeter Summary">
-                    <div class="absolute -bottom-6 -right-6 p-6 glass rounded-2xl border border-indigo-500/30">
+                    <img src="images/1*cwmnat4eAuHTHdB4OBsqWg.png" 
+                         class="rounded-2xl border border-white/10 shadow-2xl transition group-hover:scale-[1.02] duration-500" 
+                         alt="AppSecMeter Summary">
+                    <!-- Purple Highlight Box (Maturity Stat) -->
+                    <div class="absolute -bottom-6 -right-6 p-6 glass rounded-2xl border border-indigo-500/30 shadow-xl">
                         <div class="text-3xl font-bold text-indigo-400">48.2%</div>
-                        <div class="text-xs text-slate-400 uppercase tracking-tighter font-semibold">Example Maturity</div>
+                        <div class="text-xs text-slate-400 uppercase tracking-tighter font-semibold">Overall Maturity</div>
                     </div>
                 </div>
             </div>
@@ -151,7 +161,7 @@
                     <p class="text-slate-400 text-lg">Detailed reporting designed for both technical stakeholders and executive leadership.</p>
                 </div>
                 <a href="https://medium.com/@just_infosec_" target="_blank" class="text-indigo-400 font-bold hover:underline mb-2">
-                    Read the full methodology on Medium <i class="fas fa-external-link-alt text-xs ml-1"></i>
+                    Read the methodology on Medium <i class="fas fa-external-link-alt text-xs ml-1"></i>
                 </a>
             </div>
 
@@ -159,7 +169,7 @@
                 <!-- Visual 1: Answer Distribution -->
                 <div class="group">
                     <div class="bg-slate-900 rounded-2xl p-4 border border-white/5 mb-4 group-hover:border-indigo-500/50 transition">
-                        <img src="https://raw.githubusercontent.com/purplesectools/ztappsec/main/screenshots/answer_distribution.jpg" onerror="this.src='https://via.placeholder.com/400x300/1e293b/ffffff?text=Answer+Distribution'" class="rounded-lg w-full" alt="Answer Distribution">
+                        <img src="images/image_cf9b35.jpg" class="rounded-lg w-full" alt="Answer Distribution">
                     </div>
                     <h4 class="text-white font-bold mb-2">Distribution Analysis</h4>
                     <p class="text-sm text-slate-400">Visualizing "Yes" vs "Planned" vs "No" to understand your program's trajectory.</p>
@@ -167,7 +177,7 @@
                 <!-- Visual 2: SAMM Radar -->
                 <div class="group">
                     <div class="bg-slate-900 rounded-2xl p-4 border border-white/5 mb-4 group-hover:border-indigo-500/50 transition">
-                        <img src="https://raw.githubusercontent.com/purplesectools/ztappsec/main/screenshots/samm_radar.jpg" onerror="this.src='https://via.placeholder.com/400x300/1e293b/ffffff?text=Maturity+Radar'" class="rounded-lg w-full" alt="Maturity Radar">
+                        <img src="images/image_cf9b12.png" class="rounded-lg w-full" alt="Maturity Radar">
                     </div>
                     <h4 class="text-white font-bold mb-2">Multi-Dimension Maturity</h4>
                     <p class="text-sm text-slate-400">Radar charts mapped to Governance, Design, Implementation, and Operations.</p>
@@ -175,7 +185,7 @@
                 <!-- Visual 3: Zero Trust Overview -->
                 <div class="group">
                     <div class="bg-slate-900 rounded-2xl p-4 border border-white/5 mb-4 group-hover:border-indigo-500/50 transition">
-                        <img src="https://raw.githubusercontent.com/purplesectools/ztappsec/main/screenshots/zt_overview.jpg" onerror="this.src='https://via.placeholder.com/400x300/1e293b/ffffff?text=ZT+Capability'" class="rounded-lg w-full" alt="Zero Trust Capability">
+                        <img src="images/image_cf9adb.jpg" class="rounded-lg w-full" alt="Zero Trust Capability">
                     </div>
                     <h4 class="text-white font-bold mb-2">ZT Capability Mapping</h4>
                     <p class="text-sm text-slate-400">How your AppSec controls strengthen NIST ZT pillars like Data and Identity.</p>
@@ -227,8 +237,5 @@
         </div>
     </footer>
 
-    <script>
-        // Simple scroll spy or interactive elements can be added here
-    </script>
 </body>
 </html>
