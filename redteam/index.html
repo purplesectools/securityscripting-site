@@ -1,0 +1,111 @@
+AI vs AI
+How it works Modes Proof Launch
+Adaptive adversarial testing for LLM applications
+Stop testing prompt injection with static payload lists.
+AI vs AI points one model at another, scores every response with a local judge, and crafts the next attack based on what just happened. Run with a local Ollama attacker, an external OpenAI-compatible LLM API, or a hybrid flow that mixes curated probes with live model reasoning. Test inference APIs, raw HTTP requests, and custom LLM apps with a closed-loop attacker that learns as it goes.
+View quickstart See the attack stream
+	•	Runtime-generated payloads
+	•	Local Ollama or external LLM APIs
+	•	Library, LLM, or hybrid attack mode
+	•	Goal success plus side-leak reporting
+
+￼
+Active mode Mixed 4 LLM / 3 Lib
+Judge loop Goal score + leak spotting
+Why this exists
+Most prompt injection testing stops where real adaptive attackers start.
+Static catalogs plateau fast
+Fixed jailbreak strings are useful baselines, but they do not react to the target's refusal style, system prompt structure, or tool behavior. Once a static list is exhausted, the test often stalls even when the target still has reachable weaknesses.
+Adaptive attackers do not repeat themselves
+AI vs AI watches the last answer, tracks score trends, detects stalls, and pivots tactics mid-run to keep pressure on the goal instead of replaying a fixed payload catalog.
+Bring any target you already have
+Paste raw HTTP, import cURL-style requests, or point directly at an inference endpoint. The tool replaces {{PROMPT}} and tests the real path you ship, not a simplified benchmark harness.
+Why it is different
+Built for adaptive red teaming, not just replaying known strings.
+Capability
+Static payload tools
+AI vs AI
+Payload generation
+Prewritten jailbreak lists and probes
+Runtime-crafted payloads guided by target behavior and judge scores
+Attack progression
+Sequential replay with limited adaptation
+Closed-loop mutation, pivots, and plateau detection
+Goal handling
+General probing or category checks
+Explicit goal-driven runs such as prompt extraction, refusal workflow disclosure, or moderation leakage
+Infrastructure support
+Often bound to a framework or fixed adapters
+Raw HTTP, cURL-style imports, inference APIs, local Ollama, or external OpenAI-compatible APIs
+Leak reporting
+May focus only on pass or fail against the main check
+Tracks goal success and incidental side leaks the judge spots along the way
+Closed-loop orchestration
+Every iteration is informed by the last one.
+01
+Attacker generates a payload
+A local or hosted attacker model selects a strategy such as instruction override, fake tool output, role-play, or authority appeal.
+02
+Target receives the real request
+The payload is injected into your actual HTTP request template or sent straight to an inference API for model-direct testing.
+03
+Judge scores the outcome
+A second local model evaluates whether the target complied, leaked, partially revealed, or stayed safely on track. It can score progress toward the goal while also flagging incidental side leaks discovered during the run.
+04
+Orchestrator mutates the next move
+The next payload is crafted from score feedback, prior refusals, and plateau detection instead of repeating the same failing prompt.
+attack-loop.log local / ollama
+> warmup attacker
+llm instruction_override
+lib fake_tool_output
+pivot plateau detected
+> score improved to 0.20
+> mutate and continue...
+This is not a payload library with a nicer UI. It is an attack loop with memory, goal tracking, scoring, leak detection, and tactical drift.
+Attack modes
+Choose how much of the run is guided by models versus curated probes.
+Library
+Deterministic baselines
+Use a curated payload family when you want repeatable probes, fast regression testing, or a known security checklist.
+Hybrid
+Best of both worlds
+Blend library-backed probes with live attacker reasoning so the run starts grounded and then adapts when the target resists.
+Pure LLM
+Maximum creativity
+Let the attacker synthesize payloads end-to-end when you want broader exploration, emergent tactics, and novel prompt chains.
+Model and target support
+Local-first when you want control, external APIs when you want stronger reasoning.
+Local Ollama attacker and judge
+Keep adversarial payload generation and judging on your machine for privacy, reproducibility, and better tolerance for offensive red-team phrasing.
+External OpenAI-compatible APIs
+Swap in hosted attacker models through compatible endpoints when you want stronger reasoning, broader model choice, or team-wide infrastructure.
+Bring-any-target request flow
+Test direct inference APIs, internal gateways, custom chat apps, RAG systems, and other HTTP-based LLM applications by sending the real request shape they already use.
+Product proof
+Built for operators who want to see the attack think.
+￼
+A live three-pane stream shows attacker reasoning, the exact payload sent, the target verdict scored by the judge, and evidence of which iterations progressed toward the goal or produced side leaks.
+￼
+Configure raw HTTP, point at an inference API, and use a local Ollama attacker without leaving the dashboard.
+What teams get
+Purpose-built for real LLM app security work.
+Any HTTP target
+Cookies, auth headers, JSON bodies, custom response paths.
+Local or hosted attacker stack
+Use Ollama locally or connect to external OpenAI-compatible model APIs.
+Goal-based evaluation
+Measure whether the target reached the specific outcome you care about, not just whether it behaved oddly.
+Side-leak visibility
+Capture incidental disclosures the judge notices even when they do not fully satisfy the primary goal.
+Live reasoning trail
+Review tactics, pivots, and score progression instead of only final output.
+Run exportability
+Capture outcomes for triage, comparisons, demos, and retesting.
+Who this is for
+Security engineers, red teams, platform teams, and builders shipping LLM workflows.
+If you need to test a chatbot, gateway, RAG endpoint, internal assistant, or OpenAI-compatible API against adaptive prompt injection pressure, this page is your front door. It is especially useful when static payload replay is no longer telling you where the real boundary is.
+Quickstart
+Run it locally. Host the attacker where you want. Test what you actually deploy.
+git clone <repo> cd AIvsAI python -m venv .venv && source .venv/bin/activate pip install . ollama pull llama3.1:8b aivsai
+Designed for defensive testing and authorized research. Ideal when you want a GitHub-native project page that explains the difference between adaptive red teaming and static jailbreak catalogs.
+Read the project README
