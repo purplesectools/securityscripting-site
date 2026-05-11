@@ -1,627 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>AI / ML Threat Modeling Assistant | SecurityScripting</title>
-
-  <meta name="description" content="Open-source AI/ML threat modeling platform for LLMs, RAG, Agentic AI, MCP, and classical ML systems. Maps findings to OWASP, MITRE ATLAS, NIST AI RMF, ISO 27001, SOC2, GDPR, HIPAA and more." />
-
-  <meta name="keywords" content="AI threat modeling, LLM security, OWASP LLM Top 10, MITRE ATLAS, Agentic AI security, MCP security, RAG security, AI risk assessment, AI governance, AI red teaming, GenAI security" />
-
-  <meta property="og:title" content="AI / ML Threat Modeling Assistant" />
-  <meta property="og:description" content="Open-source AI security threat modeling platform for LLMs, Agentic AI, MCP, RAG and ML systems." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://securityscripting.com/aimlthreats/" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f6f8fc;
-      color: #111827;
-      line-height: 1.7;
-    }
-
-    header {
-      background: linear-gradient(135deg, #07152d, #0d1f44);
-      color: white;
-      padding: 90px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-
-    header p {
-      max-width: 950px;
-      margin: auto;
-      font-size: 1.15rem;
-      opacity: 0.92;
-    }
-
-    .hero-buttons {
-      margin-top: 35px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 26px;
-      margin: 10px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.25s ease;
-    }
-
-    .btn-primary {
-      background: #2563eb;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-
-    .btn-secondary {
-      background: white;
-      color: #111827;
-    }
-
-    .btn-secondary:hover {
-      background: #e5e7eb;
-    }
-
-    section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 70px 20px;
-    }
-
-    h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
-
-    .section-subtitle {
-      color: #4b5563;
-      margin-bottom: 40px;
-      font-size: 1.05rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 24px;
-    }
-
-    .card {
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-      border: 1px solid #e5e7eb;
-    }
-
-    .card h3 {
-      margin-bottom: 15px;
-      font-size: 1.25rem;
-    }
-
-    .card p {
-      color: #374151;
-    }
-
-    .blue {
-      background: #eef4ff;
-    }
-
-    .purple {
-      background: #f4efff;
-    }
-
-    .green {
-      background: #eefcf5;
-    }
-
-    .orange {
-      background: #fff6ea;
-    }
-
-    .pink {
-      background: #fff1f4;
-    }
-
-    .feature-image {
-      margin-top: 30px;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid #d1d5db;
-      background: white;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-    }
-
-    .feature-image img {
-      width: 100%;
-      display: block;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(420px,1fr));
-      gap: 40px;
-      align-items: center;
-    }
-
-    .loader-box {
-      background: white;
-      border-radius: 20px;
-      padding: 40px;
-      text-align: center;
-      margin-top: 30px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-    }
-
-    .spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #dbeafe;
-      border-top: 6px solid #2563eb;
-      border-radius: 50%;
-      margin: auto;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    footer {
-      background: #07152d;
-      color: white;
-      text-align: center;
-      padding: 45px 20px;
-      margin-top: 80px;
-    }
-
-    footer a {
-      color: #93c5fd;
-      text-decoration: none;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin: 5px;
-      background: #dbeafe;
-      color: #1d4ed8;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    ul {
-      padding-left: 22px;
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <h1>AI / ML Threat Modeling Assistant</h1>
-
-  <p>
-    Open-source AI security threat modeling platform for LLMs, RAG pipelines,
-    Agentic AI systems, MCP integrations, multimodal applications, and
-    classical ML architectures.
-  </p>
-
-  <div class="hero-buttons">
-    <a href="javascript:void(0)" class="btn btn-primary" onclick="launchTool()">
-      Launch Tool
-    </a>
-
-    <a href="https://github.com/purplesectools/ai-threat-model-assistant"
-       target="_blank"
-       class="btn btn-secondary">
-      View GitHub
-    </a>
-  </div>
-
-  <div style="margin-top:20px;">
-    <span class="badge">OWASP</span>
-    <span class="badge">MITRE ATLAS</span>
-    <span class="badge">NIST AI RMF</span>
-    <span class="badge">SOC2</span>
-    <span class="badge">ISO 27001</span>
-    <span class="badge">GDPR</span>
-    <span class="badge">HIPAA</span>
-    <span class="badge">EU AI Act</span>
-  </div>
-</header>
-
-<section>
-
-  <h2>Why This Project Exists</h2>
-
-  <p class="section-subtitle">
-    Most AI security assessments stop at static checklists.
-    Modern AI systems are no longer isolated models. They use tools,
-    memory, vector databases, external APIs, autonomous agents,
-    browser automation, and downstream integrations.
-  </p>
-
-  <div class="grid">
-
-    <div class="card blue">
-      <h3>Threat Modeling for Real AI Systems</h3>
-      <p>
-        Analyze production-style AI architectures instead of isolated prompts.
-        Model runtime behavior, autonomous execution, external systems,
-        multi-agent communication, and downstream attack paths.
-      </p>
-    </div>
-
-    <div class="card purple">
-      <h3>Chain-Based Risk Discovery</h3>
-      <p>
-        Correlate multiple weak controls into chained attack paths.
-        Detect how medium findings combine into larger exploitation scenarios.
-      </p>
-    </div>
-
-    <div class="card green">
-      <h3>Framework-Aware Security Mapping</h3>
-      <p>
-        Automatically map findings to OWASP LLM Top 10, MITRE ATLAS,
-        NIST AI RMF, ISO 27001, SOC2, HIPAA, GDPR, EU AI Act and more.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <h2>Built for More Than Just LLMs</h2>
-
-  <p class="section-subtitle">
-    The platform supports multiple AI architectures and dynamically adjusts
-    questions, controls, attack paths, and findings based on the selected system.
-  </p>
-
-  <div class="feature-image">
-    <img src="images/coverage-matrix.png"
-         alt="AI Threat Modeling Coverage Matrix">
-  </div>
-
-</section>
-
-<section>
-
-  <div class="two-col">
-
-    <div>
-      <h2>Agentic AI & Autonomous Systems</h2>
-
-      <p class="section-subtitle">
-        Threat modeling support for autonomous agents, multi-agent systems,
-        persistent memory, browser-use agents, runtime execution,
-        external APIs, and code execution workflows.
-      </p>
-
-      <ul>
-        <li>Human-in-the-loop controls</li>
-        <li>Agent memory integrity</li>
-        <li>Inter-agent authentication</li>
-        <li>Code execution sandboxing</li>
-        <li>Supply-chain review</li>
-        <li>Runtime kill switches</li>
-      </ul>
-    </div>
-
-    <div class="feature-image">
-      <img src="images/agentic-screen.png"
-           alt="Agentic AI Threat Modeling Controls">
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <div class="two-col">
-
-    <div class="feature-image">
-      <img src="images/runtime-behavior.png"
-           alt="Runtime Behavior Security Controls">
-    </div>
-
-    <div>
-      <h2>Runtime Behavior & Operational Controls</h2>
-
-      <p class="section-subtitle">
-        Analyze runtime exposure including direct user access,
-        autonomous execution, downstream integrations,
-        external systems, tool usage, and real-time processing.
-      </p>
-
-      <ul>
-        <li>Direct user interaction analysis</li>
-        <li>External inference exposure</li>
-        <li>Tool/plugin execution review</li>
-        <li>Human override validation</li>
-        <li>Operational risk visibility</li>
-      </ul>
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <h2>Dynamic AI Security Assessment Workflow</h2>
-
-  <p class="section-subtitle">
-    The assessment adapts based on architecture selection and runtime behavior.
-  </p>
-
-  <div class="grid">
-
-    <div class="card orange">
-      <h3>Project & Architecture Context</h3>
-      <p>
-        Capture deployment stage, business impact, AI type,
-        model patterns, supply-chain exposure, and regulated domains.
-      </p>
-    </div>
-
-    <div class="card pink">
-      <h3>Data & Runtime Exposure</h3>
-      <p>
-        Evaluate sensitive data handling, runtime outputs,
-        external integrations, governance controls, and downstream systems.
-      </p>
-    </div>
-
-    <div class="card purple">
-      <h3>LLM & Prompt Security</h3>
-      <p>
-        Analyze prompt injection exposure, hallucination controls,
-        system prompt leakage risk, moderation gaps, and output handling.
-      </p>
-    </div>
-
-  </div>
-
-  <div class="feature-image">
-    <img src="images/data-behavior-screen.png"
-         alt="Data and Behavior Security Assessment">
-  </div>
-
-  <div class="feature-image" style="margin-top:40px;">
-    <img src="images/llm-screen.png"
-         alt="LLM Threat Modeling Controls">
-  </div>
-
-</section>
-
-<section>
-
-  <h2>Attack Chains & Correlated Findings</h2>
-
-  <p class="section-subtitle">
-    Findings are not treated as isolated issues.
-    The engine correlates weak controls into deterministic attack paths.
-  </p>
-
-  <div class="feature-image">
-    <img src="images/attack-chains-overview.png"
-         alt="AI Attack Chain Overview">
-  </div>
-
-  <div class="feature-image" style="margin-top:40px;">
-    <img src="images/attack-chain-deep-dive.png"
-         alt="Detailed AI Attack Chain Analysis">
-  </div>
-
-</section>
-
-<section>
-
-  <div class="two-col">
-
-    <div>
-      <h2>Executive Risk Reporting</h2>
-
-      <p class="section-subtitle">
-        Generate security reports understandable by:
-      </p>
-
-      <ul>
-        <li>Application Security teams</li>
-        <li>AI governance teams</li>
-        <li>Security leadership</li>
-        <li>Risk & compliance stakeholders</li>
-        <li>Developers and AI engineers</li>
-      </ul>
-    </div>
-
-    <div class="feature-image">
-      <img src="images/executive-summary.png"
-           alt="AI Security Executive Summary">
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <h2>Prioritized Risks & Quick Wins</h2>
-
-  <p class="section-subtitle">
-    Risks are ranked based on likelihood, impact,
-    exploitability, and missing control correlation.
-  </p>
-
-  <div class="feature-image">
-    <img src="images/top-risks-dashboard.png"
-         alt="Top AI Security Risks Dashboard">
-  </div>
-
-</section>
-
-<section>
-
-  <div class="two-col">
-
-    <div class="feature-image">
-      <img src="images/detailed-threat-analysis.png"
-           alt="Detailed AI Threat Analysis">
-    </div>
-
-    <div>
-      <h2>Detailed Threat Intelligence</h2>
-
-      <p class="section-subtitle">
-        Every finding includes:
-      </p>
-
-      <ul>
-        <li>Reasoning & exploitability context</li>
-        <li>Abuse-case narratives</li>
-        <li>Attack paths</li>
-        <li>MITRE ATLAS mappings</li>
-        <li>NIST impact categories</li>
-        <li>Practical mitigation guidance</li>
-        <li>Quick remediation wins</li>
-      </ul>
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <h2>Framework & Compliance Coverage</h2>
-
-  <p class="section-subtitle">
-    Automatically align findings with AI security and governance frameworks.
-  </p>
-
-  <div class="feature-image">
-    <img src="images/framework-and-atlas-coverage.png"
-         alt="MITRE ATLAS and OWASP Coverage">
-  </div>
-
-</section>
-
-<section class="center">
-
-  <h2>Launch the Platform</h2>
-
-  <p class="section-subtitle">
-    The hosted version may take a few seconds to wake up
-    if inactive due to free-tier hosting.
-  </p>
-
-  <div class="loader-box" id="loaderBox" style="display:none;">
-    <div class="spinner"></div>
-
-    <p style="margin-top:25px;">
-      Waking up AI threat modeling engine...
-      <br><br>
-      Redirecting in <span id="countdown">10</span> seconds.
-    </p>
-  </div>
-
-  <a href="javascript:void(0)"
-     class="btn btn-primary"
-     onclick="launchTool()">
-     Open AI Threat Modeling Assistant
-  </a>
-
-</section>
-
-<footer>
-
-  <p>
-    AI / ML Threat Modeling Assistant © SecurityScripting
-  </p>
-
-  <p style="margin-top:12px;">
-    GitHub:
-    <a href="https://github.com/purplesectools/ai-threat-model-assistant"
-       target="_blank">
-       github.com/purplesectools/ai-threat-model-assistant
-    </a>
-  </p>
-
-  <p style="margin-top:12px;">
-    X/Twitter:
-    <a href="https://x.com/just_infosec_"
-       target="_blank">
-       @just_infosec_
-    </a>
-  </p>
-
-</footer>
-
-<script>
-
-function launchTool() {
-
-  document.getElementById("loaderBox").style.display = "block";
-
-  let count = 10;
-
-  const countdownEl = document.getElementById("countdown");
-
-  const interval = setInterval(() => {
-
-    count--;
-
-    countdownEl.innerText = count;
-
-    if (count <= 0) {
-
-      clearInterval(interval);
-
-      window.location.href = "https://aimlthreats.com";
-
-    }
-
-  }, 1000);
-
-}
-
-</script>
-
-</body>
-</html>
+AI / ML Threat Modeling Assistant
+Open-source AI security threat modeling platform for LLMs, RAG pipelines, Agentic AI systems, MCP integrations, multimodal applications, and classical ML architectures.
+Launch Tool View GitHub
+OWASP MITRE ATLAS NIST AI RMF SOC2 ISO 27001 GDPR HIPAA EU AI Act
+Why This Project Exists
+Most AI security assessments stop at static checklists. Modern AI systems are no longer isolated models. They use tools, memory, vector databases, external APIs, autonomous agents, browser automation, and downstream integrations.
+Threat Modeling for Real AI Systems
+Analyze production-style AI architectures instead of isolated prompts. Model runtime behavior, autonomous execution, external systems, multi-agent communication, and downstream attack paths.
+Chain-Based Risk Discovery
+Correlate multiple weak controls into chained attack paths. Detect how medium findings combine into larger exploitation scenarios.
+Framework-Aware Security Mapping
+Automatically map findings to OWASP LLM Top 10, MITRE ATLAS, NIST AI RMF, ISO 27001, SOC2, HIPAA, GDPR, EU AI Act and more.
+Built for More Than Just LLMs
+The platform supports multiple AI architectures and dynamically adjusts questions, controls, attack paths, and findings based on the selected system.
+￼
+Agentic AI & Autonomous Systems
+Threat modeling support for autonomous agents, multi-agent systems, persistent memory, browser-use agents, runtime execution, external APIs, and code execution workflows.
+	•	Human-in-the-loop controls
+	•	Agent memory integrity
+	•	Inter-agent authentication
+	•	Code execution sandboxing
+	•	Supply-chain review
+	•	Runtime kill switches
+￼
+￼
+Runtime Behavior & Operational Controls
+Analyze runtime exposure including direct user access, autonomous execution, downstream integrations, external systems, tool usage, and real-time processing.
+	•	Direct user interaction analysis
+	•	External inference exposure
+	•	Tool/plugin execution review
+	•	Human override validation
+	•	Operational risk visibility
+Dynamic AI Security Assessment Workflow
+The assessment adapts based on architecture selection and runtime behavior.
+Project & Architecture Context
+Capture deployment stage, business impact, AI type, model patterns, supply-chain exposure, and regulated domains.
+Data & Runtime Exposure
+Evaluate sensitive data handling, runtime outputs, external integrations, governance controls, and downstream systems.
+LLM & Prompt Security
+Analyze prompt injection exposure, hallucination controls, system prompt leakage risk, moderation gaps, and output handling.
+￼
+￼
+Attack Chains & Correlated Findings
+Findings are not treated as isolated issues. The engine correlates weak controls into deterministic attack paths.
+￼
+￼
+Executive Risk Reporting
+Generate security reports understandable by:
+	•	Application Security teams
+	•	AI governance teams
+	•	Security leadership
+	•	Risk & compliance stakeholders
+	•	Developers and AI engineers
+￼
+Prioritized Risks & Quick Wins
+Risks are ranked based on likelihood, impact, exploitability, and missing control correlation.
+￼
+￼
+Detailed Threat Intelligence
+Every finding includes:
+	•	Reasoning & exploitability context
+	•	Abuse-case narratives
+	•	Attack paths
+	•	MITRE ATLAS mappings
+	•	NIST impact categories
+	•	Practical mitigation guidance
+	•	Quick remediation wins
+Framework & Compliance Coverage
+Automatically align findings with AI security and governance frameworks.
+￼
+Launch the Platform
+The hosted version may take a few seconds to wake up if inactive due to free-tier hosting.
+Open AI Threat Modeling Assistant
+AI / ML Threat Modeling Assistant © SecurityScripting
+GitHub: github.com/purplesectools/ai-threat-model-assistant
+X/Twitter: @just_infosec_
