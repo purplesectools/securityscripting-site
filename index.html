@@ -1,439 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purple Security | Professional Open Source Security Tools</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Purple Security: Home to advanced open-source security tools including DeepProbe, AIvsAI, AI/ML Threat Modeling, and AppSecMeter. Specialized in AI security research and memory forensics.">
+    <meta name="keywords" content="Purple Security, AI Security, LLM Red Teaming, Memory Forensics, Threat Modeling, AppSec Maturity, Open Source Security, MITRE ATLAS, OWASP LLM Top 10">
+    <link rel="canonical" href="https://securityscripting.com/" />
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T6FHM8279B"></script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="Purple Security | Open Source Tools" />
+    <meta property="og:description" content="Advanced security tools for LLM Red Teaming, Forensic Analysis, and AI Risk Management." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        :root {
+            --bg-dark: #0a0a0c;
+            --sidebar-bg: #111114;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-purple: #a855f7;
+        }
 
-  gtag('config', 'G-T6FHM8279B');
-</script>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
 
-<title>Security Scripting</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
 
-<title>Security Scripting | Memory Forensics, AI Threat Modeling & Zero Trust AppSec</title>
+        .nav-item {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
 
-<meta name="description" content="Security Scripting provides open-source cybersecurity tools and research for memory forensics, DFIR, AI threat modeling, OWASP ML Top 10, MITRE ATLAS, and Zero Trust Application Security.">
+        .nav-item.active {
+            background: rgba(168, 85, 247, 0.1);
+            color: white;
+            border-right: 3px solid var(--accent-purple);
+        }
 
-<meta name="keywords" content="memory forensics, DFIR, AI threat modeling, OWASP ML Top 10, MITRE ATLAS, Zero Trust AppSec, cybersecurity tools, volatility, digital forensics, AI security, application security">
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
 
-<meta name="author" content="Security Scripting">
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(168, 85, 247, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
 
-<meta property="og:title" content="Security Scripting">
-<meta property="og:description" content="Open-source cybersecurity tools for memory forensics, DFIR, AI security, and Zero Trust engineering.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://securityscripting.com">
+        .screenshot-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            background: #1e293b;
+            aspect-ratio: 16 / 9;
+        }
 
-<style>
+        .screenshot-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #0f172a;
-  color: #e2e8f0;
-  display: flex;
-}
+        .glass-card:hover .screenshot-container img {
+            transform: scale(1.05);
+        }
 
-/* Sidebar */
+        .section-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
 
-.sidebar {
-  width: 240px;
-  height: 100vh;
-  background: #020617;
-  padding: 20px;
-  box-sizing: border-box;
-  border-right: 1px solid #1e293b;
-  position: fixed;
-}
+        .section-content.active {
+            display: block;
+        }
 
-.sidebar h1 {
-  font-size: 20px;
-  margin-bottom: 30px;
-  color: #38bdf8;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.sidebar a {
-  display: block;
-  color: #94a3b8;
-  text-decoration: none;
-  margin-bottom: 15px;
-  font-size: 14px;
-  transition: 0.2s ease;
-}
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-.sidebar a:hover {
-  color: #38bdf8;
-}
-
-/* Main */
-
-.main {
-  margin-left: 240px;
-  padding: 40px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Header */
-
-.header h1 {
-  margin: 0;
-  font-size: 34px;
-}
-
-.header p {
-  color: #94a3b8;
-  margin-top: 10px;
-  max-width: 850px;
-  line-height: 1.8;
-}
-
-/* Featured Grid */
-
-.hero-grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 25px;
-}
-
-/* Lower Grid */
-
-.grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 25px;
-}
-
-/* Card Link */
-
-.card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Cards */
-
-.card {
-  background: linear-gradient(145deg, #020617, #0b1220);
-  border: 1px solid #1e293b;
-  border-radius: 14px;
-  padding: 28px;
-  transition: 0.25s ease;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.card:hover {
-  border-color: #38bdf8;
-  transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.12);
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  background: rgba(56, 189, 248, 0.05);
-  border-radius: 50%;
-  top: -30px;
-  right: -30px;
-}
-
-.card h2 {
-  margin-top: 0;
-  font-size: 24px;
-  color: #38bdf8;
-}
-
-.card p {
-  font-size: 15px;
-  color: #94a3b8;
-  line-height: 1.8;
-}
-
-/* Tags */
-
-.tags {
-  margin-top: 20px;
-}
-
-.tag {
-  display: inline-block;
-  background: #0f172a;
-  border: 1px solid #1e293b;
-  color: #38bdf8;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-}
-
-/* SEO Content */
-
-.seo-content {
-  margin-top: 70px;
-  line-height: 1.9;
-}
-
-.seo-content h2 {
-  color: #38bdf8;
-  margin-top: 45px;
-}
-
-.seo-content p {
-  color: #94a3b8;
-  max-width: 1000px;
-}
-
-/* Loader */
-
-#loaderOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(2, 6, 23, 0.96);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 9999;
-}
-
-.loader {
-  width: 65px;
-  height: 65px;
-  border: 5px solid #1e293b;
-  border-top: 5px solid #38bdf8;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-.loader-text {
-  margin-top: 25px;
-  color: #94a3b8;
-  font-size: 16px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive */
-
-@media(max-width: 900px) {
-
-  body {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid #1e293b;
-  }
-
-  .main {
-    margin-left: 0;
-  }
-
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-</style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
 </head>
+<body class="flex min-h-screen">
 
-<body>
+    <!-- Left Sidebar -->
+    <aside class="sidebar w-64 md:w-72 fixed h-full z-50 flex flex-col hidden md:flex">
+        <div class="p-8">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                    <i class="fas fa-shield-halved text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white leading-none">Purple</h1>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Security</p>
+                </div>
+            </div>
 
-<!-- Loader -->
-
-<div id="loaderOverlay">
-  <div class="loader"></div>
-  <div class="loader-text">
-    Initializing AI Threat Modeling Engine...
-  </div>
-</div>
-
-<!-- Sidebar -->
-
-<div class="sidebar">
-
-  <h1>Security Scripting</h1>
-
-  <a href="/">🏠 Home</a>
-  <a href="/tools">🛠 Tools</a>
-  <a href="/articles">📝 Technical Blog</a>
-
-</div>
-
-<!-- Main -->
-
-<div class="main">
-
-  <div class="header">
-
-    <h1>Security Research, DFIR & AI Security Tooling</h1>
-
-    <p>
-      Security Scripting provides open-source cybersecurity tools and research focused on memory forensics, digital forensics and incident response (DFIR), AI threat modeling, Zero Trust Application Security, and modern security engineering workflows.
-    </p>
-
-  </div>
-
-  <!-- Top Featured Tools -->
-
-  <div class="hero-grid">
-
-    <!-- DeepProbe -->
-
-    <a class="card-link" href="https://github.com/purplesectools/DeepProbe">
-
-      <div class="card">
-
-        <h2>DeepProbe</h2>
-
-        <p>
-          Advanced memory forensics and DFIR automation framework designed to accelerate investigations and identify stealthy attacker behavior including injected processes, persistence artifacts, suspicious network activity, LOLBins, malware execution patterns, and modern post-exploitation techniques.
-        </p>
-
-        <div class="tags">
-          <span class="tag">Memory Forensics</span>
-          <span class="tag">DFIR</span>
-          <span class="tag">Volatility</span>
-          <span class="tag">Threat Hunting</span>
+            <nav class="space-y-2">
+                <div onclick="switchTab('tools')" id="nav-tools" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 font-medium">
+                    <i class="fas fa-cubes text-lg"></i>
+                    <span>Open Source Tools</span>
+                </div>
+                <div onclick="switchTab('pubs')" id="nav-pubs" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 font-medium">
+                    <i class="fas fa-newspaper text-lg"></i>
+                    <span>Publications</span>
+                </div>
+            </nav>
         </div>
 
-      </div>
+        <div class="mt-auto p-8 border-t border-white/5">
+            <div class="flex flex-col gap-4">
+                <a href="https://github.com/purplesectools" target="_blank" class="flex items-center gap-3 text-slate-400 hover:text-white transition-colors text-sm">
+                    <i class="fa-brands fa-github text-lg"></i>
+                    <span>@purplesectools</span>
+                </a>
+                <a href="https://x.com/just_infosec_" target="_blank" class="flex items-center gap-3 text-slate-400 hover:text-white transition-colors text-sm">
+                    <i class="fa-brands fa-x-twitter text-lg"></i>
+                    <span>@just_infosec_</span>
+                </a>
+            </div>
+        </div>
+    </aside>
 
-    </a>
+    <!-- Mobile Nav Header -->
+    <header class="md:hidden fixed top-0 w-full bg-[#0a0a0c]/80 backdrop-blur-md border-b border-white/5 z-[60] px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-shield-halved text-white text-sm"></i>
+            </div>
+            <span class="font-bold text-white uppercase tracking-tighter">Purple Security</span>
+        </div>
+        <button onclick="toggleMobileMenu()" class="text-white">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </header>
 
-    <!-- AI Threat Modeling -->
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-[100] hidden flex-col p-10">
+        <div class="flex justify-end mb-10">
+            <button onclick="toggleMobileMenu()" class="text-white text-2xl"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="space-y-6 text-2xl font-bold">
+            <div onclick="switchTab('tools'); toggleMobileMenu();" class="text-white">Open Source Tools</div>
+            <div onclick="switchTab('pubs'); toggleMobileMenu();" class="text-slate-500">Publications</div>
+        </nav>
+        <div class="mt-auto flex gap-6 text-2xl text-slate-400">
+            <a href="https://github.com/purplesectools"><i class="fa-brands fa-github"></i></a>
+            <a href="https://x.com/just_infosec_"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+    </div>
 
-    <a class="card-link" href="javascript:void(0);" onclick="openThreatModelingTool()">
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-72 p-6 md:p-12 pt-24 md:pt-12">
+        
+        <!-- Tools Section -->
+        <div id="section-tools" class="section-content active">
+            <header class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Open Source Tools</h2>
+                <p class="text-slate-400 max-w-2xl text-lg leading-relaxed">
+                    Advanced security frameworks for automated forensics, adversarial testing, and organizational compliance.
+                </p>
+            </header>
 
-      <div class="card">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- AIvsAI -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_875376.jpg" alt="AIvsAI Adversarial Dashboard">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-emerald-500/20 text-emerald-400 border-emerald-500/20">Red Teaming</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AIvsAI</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Goal-driven, closed-loop LLM red teaming. Autonomously mutates attacks based on target feedback to bypass modern guardrails and system prompts.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/AIvsAI" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/redteam" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
 
-        <h2>AI Threat Modeling</h2>
+                <!-- DeepProbe -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_8750b2.png" alt="DeepProbe Forensic Analysis">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-purple-500/20 text-purple-400 border-purple-500/20">Forensics</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">DeepProbe</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Automated AI-assisted memory forensics. Links raw volatility artifacts into high-confidence attack chains across process, kernel, and network layers.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/DeepProbe" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/deepprobe/" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
 
-        <p>
-          Interactive AI security threat modeling platform for analyzing AI attack surfaces using OWASP ML Top 10, MITRE ATLAS, and NIST AI guidance. Designed to help developers and security teams identify prompt injection risks, model abuse cases, data poisoning scenarios, and AI architectural weaknesses.
-        </p>
+                <!-- AI / ML Threat Modeling -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_875090.jpg" alt="AI Threat Modeling Assessment">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-blue-500/20 text-blue-400 border-blue-500/20">Governance</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AI / ML Threat Modeling</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Maps AI architectures to OWASP LLM Top 10 and MITRE ATLAS. Evaluates RAG, Agentic AI, and supply-chain risks for production models.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/ai-threat-model-assistant" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/aimlthreats/" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
 
-        <div class="tags">
-          <span class="tag">AI Security</span>
-          <span class="tag">MITRE ATLAS</span>
-          <span class="tag">OWASP ML Top 10</span>
-          <span class="tag">Threat Modeling</span>
+                <!-- AppSecMeter -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_875056.jpg" alt="AppSecMeter Maturity Dashboard">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-indigo-500/20 text-indigo-400 border-indigo-500/20">Zero Trust</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AppSecMeter</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        A maturity measurement tool bridging OWASP SAMM and NIST Zero Trust. Evaluate organizational security posture with zero-config portability.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/ztappsec" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/zerotrust/" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-      </div>
+        <!-- Publications Section -->
+        <div id="section-pubs" class="section-content">
+            <header class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Research & Publications</h2>
+                <p class="text-slate-400 max-w-2xl text-lg leading-relaxed">
+                    Methodologies and whitepapers on offensive security and AI vulnerability research.
+                </p>
+            </header>
 
-    </a>
-
-  </div>
-
-  <!-- Lower Section -->
-
-  <div class="grid">
-
-    <!-- Zero Trust AppSec -->
-
-    <a class="card-link" href="/zerotrustappsec">
-
-      <div class="card">
-
-        <h2>Zero Trust AppSec</h2>
-
-        <p>
-          Interactive Zero Trust Application Security visualization and assessment project exploring identity-aware systems, segmented trust boundaries, adaptive access enforcement, secure CI/CD pipelines, microsegmentation, and modern Zero Trust security architectures.
-        </p>
-
-        <div class="tags">
-          <span class="tag">Zero Trust</span>
-          <span class="tag">Application Security</span>
-          <span class="tag">Architecture</span>
-          <span class="tag">Security Engineering</span>
+            <div class="grid grid-cols-1 gap-6">
+                <div class="p-8 rounded-2xl border border-dashed border-white/10 flex flex-col items-center justify-center text-center py-20">
+                    <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-feather-pointed text-slate-600 text-2xl"></i>
+                    </div>
+                    <h4 class="text-white font-bold mb-2">Coming Soon</h4>
+                    <p class="text-slate-500 max-w-xs">We are currently migrating our research blogs. Stay tuned for new insights.</p>
+                </div>
+            </div>
         </div>
 
-      </div>
+        <!-- Footer -->
+        <footer class="mt-24 pt-12 border-t border-white/5 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">
+                    &copy; 2024 Purple Security Research
+                </div>
+                <div class="flex gap-8 text-sm">
+                    <a href="https://github.com/purplesectools" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                    <a href="https://x.com/just_infosec_" target="_blank" class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fa-brands fa-x-twitter mr-1"></i> X/Twitter
+                    </a>
+                    <a href="mailto:research@securityscripting.com" class="text-slate-400 hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+        </footer>
+    </main>
 
-    </a>
+    <script>
+        /**
+         * Hidden Background Wake-up
+         * Pings aimlthreats.com to wake the tool from its sleep state
+         */
+        async function wakeUpTools() {
+            try {
+                // Use no-cors to avoid blockages on cross-origin ping
+                fetch('https://aimlthreats.com', { mode: 'no-cors', cache: 'no-cache' });
+            } catch (e) {
+                // Silent fail: Background wake-up is an optimization and shouldn't affect UI
+            }
+        }
 
-  </div>
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('nav-' + tab).classList.add('active');
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('section-' + tab).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-  <!-- SEO Content -->
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
 
-  <section class="seo-content">
-
-    <h2>Memory Forensics and DFIR Research</h2>
-
-    <p>
-      DeepProbe focuses on memory forensics automation, malware detection, incident response workflows, persistence analysis, Volatility-based investigations, and detection of advanced attacker tradecraft. The project explores modern DFIR techniques for identifying stealthy compromise indicators directly from volatile memory.
-    </p>
-
-    <h2>AI Threat Modeling and AI Security</h2>
-
-    <p>
-      The AI Threat Modeling platform helps security teams analyze AI attack surfaces using OWASP ML Top 10, MITRE ATLAS, NIST AI RMF, prompt injection testing methodologies, model abuse cases, AI supply chain threats, and LLM security engineering practices.
-    </p>
-
-    <h2>Zero Trust Application Security</h2>
-
-    <p>
-      ZTAppSec explores Zero Trust principles for modern application security including identity-centric architectures, least privilege enforcement, secure software pipelines, segmented trust boundaries, adaptive access controls, and resilient cloud-native security engineering.
-    </p>
-
-  </section>
-
-</div>
-
-<script>
-
-const AIML_URL = "https://aimlthreats.com";
-
-/* Silent wakeup ping */
-
-fetch(AIML_URL, {
-  mode: "no-cors"
-}).catch(() => {});
-
-/* Loader + delayed redirect */
-
-function openThreatModelingTool() {
-
-  document.getElementById("loaderOverlay").style.display = "flex";
-
-  fetch(AIML_URL, {
-    mode: "no-cors"
-  }).catch(() => {});
-
-  setTimeout(() => {
-    window.location.href = AIML_URL;
-  }, 20000);
-}
-
-</script>
-
+        // Initialize background tasks on load
+        document.addEventListener('DOMContentLoaded', () => {
+            wakeUpTools();
+        });
+    </script>
 </body>
 </html>
