@@ -6,15 +6,19 @@
   </url>
 
   <url>
-    <loc>https://securityscripting.com/zerotrustappsec</loc>
+    <loc>https://securityscripting.com/deepprobe/</loc>
   </url>
 
   <url>
-    <loc>https://github.com/purplesectools/DeepProbe</loc>
+    <loc>https://securityscripting.com/redteam/</loc>
   </url>
 
   <url>
-    <loc>https://aimlthreats.com</loc>
+    <loc>https://securityscripting.com/aimlthreats/</loc>
+  </url>
+
+  <url>
+    <loc>https://securityscripting.com/zerotrust/</loc>
   </url>
 
 </urlset>
