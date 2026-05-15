@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purple Security | Open Source Security Tools &amp; Research | AI Security, Memory Forensics, Threat Modeling</title>
+
+    <!-- Primary SEO -->
+    <meta name="description" content="Purple Security, 15+ years in Security Engineering. Creator of DeepProbe, AIvsAI, and AI/ML Threat Modeling tools. Author of articles on AI security, memory forensics, Zero Trust, DevSecOps, and application security.">
+    <meta name="keywords" content="Purple Security, AI Security, LLM Red Teaming, Memory Forensics, DeepProbe, AIvsAI, Threat Modeling, AppSec Maturity, Zero Trust, Open Source Security, MITRE ATLAS, OWASP LLM Top 10, CVE-2021-31857, Volatility, SOAR, DevSecOps, Credential Stuffing, Incident Response, OWASP NHI, Penetration Testing AI, Purple Team">
+    <meta name="author" content="Purple Security">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://securityscripting.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Purple Security | Open Source Security Tools &amp; Research" />
+    <meta property="og:description" content="Creator of DeepProbe, AIvsAI, and AI/ML Threat Modeling tools. Articles on AI security, memory forensics, Zero Trust, and application security. 15+ years in Security Engineering." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://securityscripting.com/" />
+    <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:2400/1*aYlHVg2dAtC9Gi0fsk-s3w.png" />
+    <meta property="og:site_name" content="Purple Security" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@just_infosec_" />
+    <meta name="twitter:creator" content="@just_infosec_" />
+    <meta name="twitter:title" content="Purple Security | Open Source Security Tools &amp; Research" />
+    <meta name="twitter:description" content="Creator of DeepProbe, AIvsAI, and AI Threat Modeling tools. Articles on AI security, memory forensics, and Zero Trust. 15+ years in Security Engineering." />
+    <meta name="twitter:image" content="https://miro.medium.com/v2/resize:fit:2400/1*aYlHVg2dAtC9Gi0fsk-s3w.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "name": "Purple Security",
+      "description": "Open source security tools and research by Purple Security. 15+ years in Security Engineering. Creator of DeepProbe, AIvsAI, and AI/ML Threat Modeling tools.",
+      "url": "https://securityscripting.com/",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Purple Security",
+        "url": "https://securityscripting.com/",
+        "sameAs": [
+          "https://medium.com/@purplesecurity",
+          "https://github.com/purplesectools",
+          "https://x.com/just_infosec_"
+        ],
+        "knowsAbout": ["AI Security", "Memory Forensics", "Zero Trust", "Application Security", "Threat Modeling", "Incident Response", "DevSecOps", "Penetration Testing"]
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg-dark: #0a0a0c;
+            --sidebar-bg: #111114;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-purple: #a855f7;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background: rgba(168, 85, 247, 0.1);
+            color: white;
+            border-right: 3px solid var(--accent-purple);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(168, 85, 247, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .screenshot-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            background: #1e293b;
+            aspect-ratio: 16 / 9;
+        }
+
+        .screenshot-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .glass-card:hover .screenshot-container img {
+            transform: scale(1.05);
+        }
+
+        .section-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pub-filter {
+            transition: all 0.2s ease;
+        }
+
+        .pub-filter.active-filter {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
+            color: white;
+        }
+
+        .pub-card {
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar w-64 md:w-72 fixed h-full z-50 flex flex-col hidden md:flex">
+        <div class="p-8">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                    <i class="fas fa-shield-halved text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white leading-none">Purple</h1>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Security</p>
+                </div>
+            </div>
+
+            <nav class="space-y-2">
+                <div onclick="switchTab('tools')" id="nav-tools" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 font-medium">
+                    <i class="fas fa-cubes text-lg"></i>
+                    <span>Open Source Tools</span>
+                </div>
+                <div onclick="switchTab('pubs')" id="nav-pubs" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 font-medium">
+                    <i class="fas fa-newspaper text-lg"></i>
+                    <span>Publications</span>
+                </div>
+            </nav>
+        </div>
+
+        <div class="mt-auto p-8 border-t border-white/5">
+            <div class="flex flex-col gap-4">
+                <a href="https://github.com/purplesectools" target="_blank" class="flex items-center gap-3 text-slate-400 hover:text-white transition-colors text-sm">
+                    <i class="fa-brands fa-github text-lg"></i>
+                    <span>@purplesectools</span>
+                </a>
+                <a href="https://x.com/just_infosec_" target="_blank" class="flex items-center gap-3 text-slate-400 hover:text-white transition-colors text-sm">
+                    <i class="fa-brands fa-x-twitter text-lg"></i>
+                    <span>@just_infosec_</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Nav Header -->
+    <header class="md:hidden fixed top-0 w-full bg-[#0a0a0c]/80 backdrop-blur-md border-b border-white/5 z-[60] px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-shield-halved text-white text-sm"></i>
+            </div>
+            <span class="font-bold text-white uppercase tracking-tighter">Purple Security</span>
+        </div>
+        <button onclick="toggleMobileMenu()" class="text-white">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-[100] hidden flex-col p-10">
+        <div class="flex justify-end mb-10">
+            <button onclick="toggleMobileMenu()" class="text-white text-2xl"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="space-y-6 text-2xl font-bold">
+            <div onclick="switchTab('tools'); toggleMobileMenu();" class="text-white">Open Source Tools</div>
+            <div onclick="switchTab('pubs'); toggleMobileMenu();" class="text-slate-500">Publications</div>
+        </nav>
+        <div class="mt-auto flex gap-6 text-2xl text-slate-400">
+            <a href="https://github.com/purplesectools"><i class="fa-brands fa-github"></i></a>
+            <a href="https://x.com/just_infosec_"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-72 p-6 md:p-12 pt-24 md:pt-12">
+
+        <!-- Tools Section -->
+        <div id="section-tools" class="section-content active">
+            <header class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Open Source Tools</h2>
+                <p class="text-slate-400 max-w-2xl text-lg leading-relaxed">
+                    Advanced security frameworks for automated forensics, adversarial testing, and organizational compliance.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- AIvsAI -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_875376.jpg" alt="AIvsAI Adversarial Dashboard">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-emerald-500/20 text-emerald-400 border-emerald-500/20">Red Teaming</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AIvsAI</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Goal-driven, closed-loop LLM red teaming. Autonomously mutates attacks based on target feedback to bypass modern guardrails and system prompts.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/AIvsAI" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/redteam" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
+
+                <!-- DeepProbe -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_8750b2.png" alt="DeepProbe Forensic Analysis">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-purple-500/20 text-purple-400 border-purple-500/20">Forensics</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">DeepProbe</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Automated AI-assisted memory forensics. Links raw volatility artifacts into high-confidence attack chains across process, kernel, and network layers.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/DeepProbe" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/deepprobe/" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
+
+                <!-- AI / ML Threat Modeling -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_875090.jpg" alt="AI Threat Modeling Assessment">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-blue-500/20 text-blue-400 border-blue-500/20">Governance</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AI / ML Threat Modeling</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Maps AI architectures to OWASP LLM Top 10 and MITRE ATLAS. Evaluates RAG, Agentic AI, and supply-chain risks for production models.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/ai-threat-model-assistant" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/aimlthreats/" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
+
+                <!-- AppSecMeter -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col">
+                    <div class="screenshot-container mb-6">
+                        <img src="image_875056.jpg" alt="AppSecMeter Maturity Dashboard">
+                        <div class="absolute top-3 right-3 flex gap-2">
+                            <span class="badge bg-indigo-500/20 text-indigo-400 border-indigo-500/20">Zero Trust</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AppSecMeter</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        A maturity measurement tool bridging OWASP SAMM and NIST Zero Trust. Evaluate organizational security posture with zero-config portability.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                        <div class="flex gap-4">
+                            <a href="https://github.com/purplesectools/ztappsec" target="_blank" class="text-slate-400 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <a href="https://securityscripting.com/zerotrust/" target="_blank" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-wider text-white transition-all">Explore Tool</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Publications Section -->
+        <div id="section-pubs" class="section-content">
+            <header class="mb-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Publications</h2>
+                <p class="text-slate-400 max-w-2xl text-lg leading-relaxed">
+                    Articles on AI security, memory forensics, Zero Trust architecture, and application security, published in InfoSec Write-ups and on Medium.
+                </p>
+            </header>
+
+            <!-- Filter Bar -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <button onclick="filterPubs('all')" data-filter="all" class="pub-filter active-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-white">All</button>
+                <button onclick="filterPubs('ai-security')" data-filter="ai-security" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">AI Security</button>
+                <button onclick="filterPubs('memory-forensics')" data-filter="memory-forensics" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">Memory Forensics</button>
+                <button onclick="filterPubs('zero-trust')" data-filter="zero-trust" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">Zero Trust</button>
+                <button onclick="filterPubs('appsec')" data-filter="appsec" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">AppSec</button>
+                <button onclick="filterPubs('soc')" data-filter="soc" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">SOC &amp; Detection</button>
+                <button onclick="filterPubs('identity')" data-filter="identity" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">Identity &amp; Access</button>
+                <button onclick="filterPubs('red-team')" data-filter="red-team" class="pub-filter px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-white/10 text-slate-400 hover:text-white hover:bg-white/5">Red Team</button>
+            </div>
+
+            <!-- Articles Grid -->
+            <div id="pubs-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+                <!-- TIER 1: Tool & System Building -->
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="memory-forensics incident-response">
+                    <span class="badge bg-purple-500/15 text-purple-400 border-purple-500/20">Memory Forensics</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">From Memory Dump to Attack Story: Building DeepProbe v2</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Documents the evolution of DeepProbe into v2, a tool that transforms raw memory dump analysis into structured, narrative-style attack stories. Instead of raw Volatility output, v2 correlates artifacts across processes, network connections, injected code, and command history to reconstruct attacker timelines automatically. Every finding is tagged to a MITRE ATT&amp;CK technique, connecting forensic evidence to incident response decisions.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/from-memory-dump-to-attack-story-building-deepprobe-v2-0c48d7476815" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="memory-forensics soc">
+                    <span class="badge bg-purple-500/15 text-purple-400 border-purple-500/20">Memory Forensics</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">DeepProbe: Open-Source Memory Forensics with ATT&amp;CK-Mapped Detections</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Introduces DeepProbe, an open-source memory forensics tool that automatically maps every forensic finding to MITRE ATT&amp;CK tactics and techniques. Analyzes memory images for injected code, hidden processes, suspicious network connections, and credential artifacts, then annotates each finding with ATT&amp;CK IDs for immediate analyst consumption. Bridges raw forensic analysis with structured threat intelligence that SOC teams can act on without manual mapping.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/deepprobe-open-source-memory-forensics-with-att-ck-mapped-detections-a1acb663de39" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="ai-security threat-modeling">
+                    <span class="badge bg-blue-500/15 text-blue-400 border-blue-500/20">AI Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Open Source Tool for AI-Specific Threat Modeling: Fast, Context-Aware, and Developer-Friendly</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Introduces an open-source AI threat modeling tool built for AI/ML attack surfaces, covering MITRE ATLAS techniques, OWASP LLM Top 10 risks, and supply chain threats. Unlike STRIDE or PASTA, it generates context-aware threat models from natural-language AI system descriptions, making structured analysis accessible to teams without dedicated security expertise. Its threat library covers adversarial inputs, model poisoning, prompt injection, and inference attacks.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/open-source-tool-for-ai-specific-threat-modeling-fast-context-aware-and-developer-friendly-2c047fdc1781" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec zero-trust">
+                    <span class="badge bg-emerald-500/15 text-emerald-400 border-emerald-500/20">AppSec</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Application Security Maturity, Simplified: OWASP SAMM + NIST + One Free Tool</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Presents ZTAppSec, a browser-based AppSec maturity assessment combining OWASP SAMM's domain model with NIST Zero Trust principles in a single evaluation. The 70+ question self-assessment scores governance, construction, verification, and deployment with instant weighted output across both frameworks. All data stays browser-local with no installation required, and generates exportable reports for benchmarking AppSec maturity and Zero Trust readiness simultaneously.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/application-security-maturity-simplified-owasp-samm-nist-one-free-tool-2aa666028f3a" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="soc threat-intel">
+                    <span class="badge bg-cyan-500/15 text-cyan-400 border-cyan-500/20">Threat Intelligence</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Building an Integrated Threat Intelligence Platform Using Python and Kibana</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">A hands-on guide to building a custom threat intelligence platform using Python for data collection and enrichment and Kibana for visualization and analyst workflows. Covers ingestion from MISP, OTX, VirusTotal, and Shodan; normalization into a common schema; IOC enrichment; and SIEM correlation, with code-level implementation detail. Dashboard designs for CTI analysts include IOC heat maps, threat actor tracking, and campaign correlation panels.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/building-an-integrated-threat-intelligence-platform-using-python-and-kibana-84503afe6251" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="identity fraud">
+                    <span class="badge bg-amber-500/15 text-amber-400 border-amber-500/20">Fraud Detection</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Building a Custom Fraud Prevention System: Defending Against Modern Cyber Threats</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Details the architecture of a custom fraud detection system built on behavioral analytics, ML models, and real-time event correlation. Feature engineering for fraud signals, model selection trade-offs between interpretability and accuracy, and operational challenges in high-throughput transaction environments are covered. A multi-stage account takeover case study demonstrates detection of fraud that bypassed rules-based controls, showing how adaptive detection handles evolving adversary patterns.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/building-a-custom-fraud-prevention-system-defending-against-modern-cyber-threats-f1fd71f72125" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="web-security appsec">
+                    <span class="badge bg-orange-500/15 text-orange-400 border-orange-500/20">Web Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Defending Web Portals: Harnessing ModSecurity, Honeypots and AppSensor for Robust Security</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Presents a defense-in-depth approach for web portals combining three layers: ModSecurity for real-time request filtering, honeypots for early attacker detection and intelligence gathering, and AppSensor for application-layer intrusion detection based on business logic violations. Correlated outputs from all three layers detect attackers who evade any single control. Practical configuration guidance covers high-traffic performance tuning for ModSecurity and low-false-positive honeypot trap design.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/defending-web-portals-harnessing-modsecurity-honeypots-and-appsensor-for-robust-security-38526db8593d" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec soc">
+                    <span class="badge bg-emerald-500/15 text-emerald-400 border-emerald-500/20">AppSec</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Enhancing Web Portal Security: Integrating AppSec and SOC</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Addresses the organizational disconnect between AppSec teams and SOC teams, and how web portals are disproportionately affected because runtime attacks are invisible to AppSec tooling and application context is invisible to SOC analysts. A practical integration model covers shared threat models, RASP deployment, application-aware SIEM correlation rules, and joint incident response playbooks. Covers how AppSec and SOC collaboration improves detection and response across OWASP Top 10 attack categories for customer-facing applications.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/enhancing-web-portal-security-integrating-appsec-and-soc-a652d7182ba4" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="soc detection">
+                    <span class="badge bg-cyan-500/15 text-cyan-400 border-cyan-500/20">SOC &amp; Detection</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Half-Second Screens: A SOC Dashboard for Multi-Phase Threats</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Proposes the "Hunt Model," a SOC detection approach that shifts from alert-centric queues to entity-centric MITRE ATT&amp;CK heatmaps where multi-phase attackers are surfaced quickly. Entities are tracked across a 3-day window and scored by ATT&amp;CK tactics triggered, with high-severity entities triggering SOAR-driven containment before analyst notification, reducing dwell time. Addresses SOC analyst alert fatigue with a practical, buildable implementation guide.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/half-second-screens-a-soc-dashboard-for-multi-phase-threats-67c3c98a0440" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="identity bot-mitigation">
+                    <span class="badge bg-amber-500/15 text-amber-400 border-amber-500/20">Identity &amp; Access</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Credential Stuffing Attack Countermeasures Using Patterns and Machine Learning</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Presents a multi-layered defense against credential stuffing that goes beyond CAPTCHA and rate limiting to incorporate ML-based anomaly detection trained on behavioral patterns distinguishing genuine users from automated account takeover attempts. Feature engineering (typing cadence, request timing, device fingerprinting, geographic velocity) and ML architectures suited to high-throughput authentication systems are detailed. A case study shows measurable reduction in account takeover incidents with low false positive rates for legitimate users.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/credential-stuffing-attack-countermeasures-using-patterns-and-machine-learning-4b356d6cb741" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <!-- TIER 2: WAF / DevSecOps / Vulnerability Management -->
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec web-security">
+                    <span class="badge bg-orange-500/15 text-orange-400 border-orange-500/20">Web Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Not Just a Regex Filter: What Modern WAFs Actually Do (and Don't)</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Dismantles the misconception that Web Application Firewalls are simple pattern-matching tools by explaining the full detection stack modern WAFs employ: behavioral profiling, reputation scoring, anomaly detection, and ML-based classification. Bypass techniques attackers use to evade regex rules are analyzed alongside WAF evolution in response. Critically covers what WAFs cannot address: business logic flaws, authenticated abuse, and broken authorization.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/not-just-a-regex-filter-what-modern-wafs-actually-do-and-dont-be318a20691d" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec devsecops">
+                    <span class="badge bg-teal-500/15 text-teal-400 border-teal-500/20">DevSecOps</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">DevSecOps: Beyond Tools Integration</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Argues that DevSecOps success depends more on cultural transformation and organizational design than on tool selection, challenging the common "plug in a SAST scanner" approach. Genuine DevSecOps maturity treats security requirements as product features and security testing as part of definition-of-done, contrasted with surface-level deployments that generate noise without changing outcomes. Practical transformation roadmaps cover organizations at different starting maturity levels, with analysis of common failure modes.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/devsecops-beyond-tools-integration-4da9280c652f" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec vulnerability">
+                    <span class="badge bg-emerald-500/15 text-emerald-400 border-emerald-500/20">AppSec</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Vulnerability Management: Scanning is Easy. Securing Is Strategy</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Challenges the scan-and-report model by showing how known, patchable vulnerabilities continue enabling major breaches, including analysis of a credit agency breach caused by a single unscoped asset. Presents a modern five-stage VM lifecycle with a case for risk-based prioritization using EPSS, Tenable VPR, and TruRisk over CVSS scoring alone. Peer case studies from Microsoft, Mayo Clinic, and Walmart show how organizations adapt VM for scale and legacy constraints.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/vulnerability-management-scanning-is-easy-securing-is-strategy-e1844d208b4d" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <!-- TIER 3: Concepts, Research, Deep-Dives -->
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="ai-security zero-trust">
+                    <span class="badge bg-blue-500/15 text-blue-400 border-blue-500/20">AI Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">The Machine Learning Pipeline: Attacks and a Zero Trust Framework</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Maps the complete ML pipeline from data ingestion through model inference as a chain of exploitable trust boundaries, proposing ZT-MLSF, a Zero Trust framework built specifically for ML systems. Each stage receives concrete controls: cryptographic dataset and model signing, schema-gated ingestion, workload identity federation, immutable registries, and inference rate limiting. Includes an OWASP ML Top 10 mapping, a four-level Zero Trust Maturity Model, and a self-assessment checklist.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/the-machine-learning-pipeline-attacks-and-a-zero-trust-framework-ba68ea414ac5" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="zero-trust appsec">
+                    <span class="badge bg-indigo-500/15 text-indigo-400 border-indigo-500/20">Zero Trust</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Secure-by-Design: Engineering Applications for Zero Trust Environment</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">A technical guide for rearchitecting applications around Zero Trust, opening with real-world failures including a 100M+ record financial SSRF breach and a CI/CD token compromise. Draws implementation lessons from Google's BeyondCorp, Netflix's paved-road model, and Shopify's OPA+Istio stack. The secure CI/CD section covers OIDC credential federation, artifact signing with Cosign/Sigstore, SLSA provenance, and GitOps deployment gates with runtime drift detection.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/secure-by-design-engineering-applications-for-zero-trust-environment-be2ee79497c0" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="identity ai-security">
+                    <span class="badge bg-amber-500/15 text-amber-400 border-amber-500/20">Identity &amp; Access</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">OWASP NHI Top 10: Why Non-Human Identities Are Your Largest Unsecured Attack Surface</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Covers the OWASP Non-Human Identities (NHI) Top 10, examining the ten most dangerous risks from service accounts, API keys, OAuth tokens, CI/CD credentials, and machine identities proliferating across modern environments. NHIs now vastly outnumber human users yet receive far less identity governance attention, making them common targets for lateral movement. Each risk includes concrete mitigations: secrets rotation, just-in-time access, and workload identity federation.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/owasp-nhi-top-10-why-non-human-identities-are-your-largest-unsecured-attack-surface-ef3f421d4a44" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="ai-security red-team">
+                    <span class="badge bg-blue-500/15 text-blue-400 border-blue-500/20">AI Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Penetration Testing of AI: Why and How</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Examines AI penetration testing as a discipline where traditional pentest methods miss attack surfaces extending to training data, model weights, prompt interfaces, and inference APIs. AI-specific attack categories are detailed with practical testing techniques: prompt injection, jailbreaking, model extraction, membership inference, and adversarial input crafting. A structured AI pentest methodology covers pre-engagement scoping, AI-specific threat modeling, active testing phases, and reporting.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/penetration-testing-of-ai-why-and-how-7b14a71e5708" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="memory-forensics incident-response">
+                    <span class="badge bg-purple-500/15 text-purple-400 border-purple-500/20">Memory Forensics</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Memory Forensics with Volatility: Detecting Fileless Malware and Living off the Land Attacks</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">A hands-on Volatility guide focused on fileless malware and LotL attacks that leave no disk artifacts. Walks through a complete IR case study: live memory acquisition, process analysis with pslist/malfind, command history extraction via cmdscan, network tracing with netscan, and YARA-based Cobalt Strike beacon confirmation. WannaCry's memory investigation is analyzed to show how RAM artifacts exposed the attack chain where disk forensics found nothing.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/memory-forensics-with-volatility-detecting-fileless-malware-and-living-off-the-land-attacks-b8c6022c0ff0" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec devsecops">
+                    <span class="badge bg-emerald-500/15 text-emerald-400 border-emerald-500/20">AppSec</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">From Bottlenecks to Built-In Security: Reading the Industry's Shift</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Draws a parallel between the evolution of software QA from centralized gatekeeping to shift-left practice, and where application security is heading. Argues that "security is a bottleneck" is a systems problem: controls applied too late, too inconsistently, and without developer-facing tooling. Examines how AI-assisted tooling, security champions, and federated AppSec models are reshaping security leadership in modern engineering organizations.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/from-bottlenecks-to-built-in-security-reading-the-industrys-shift-1d53b37d99fb" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="red-team soc">
+                    <span class="badge bg-violet-500/15 text-violet-400 border-violet-500/20">Purple Team</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Purple Team Activities: Where Offense Meets Defense to Strengthen Cyber Resilience</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Examines purple team exercises as a structured methodology for closing the feedback loop between red team findings and blue team detections, moving beyond siloed pentest reports that rarely translate into detection improvements. Exercise design is detailed: ATT&amp;CK-aligned simulation playbooks, real-time detection validation, and collaborative debriefs that immediately improve SIEM rules and response playbooks. Covers why continuous small-scale purple teaming delivers more security improvement per dollar than annual penetration tests.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/purple-team-activities-where-offense-meets-defense-to-strengthen-cyber-resilience-82e76fafe76b" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec">
+                    <span class="badge bg-emerald-500/15 text-emerald-400 border-emerald-500/20">AppSec</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Everything About Secure Code Reviews: Mastering SAST Techniques for Robust Software</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">A guide spanning manual and automated secure code review, from SAST tool configuration and tuning through human-led review for security-critical code paths. A taxonomy of vulnerability classes commonly found in code review (injection, insecure deserialization, cryptographic misuse, race conditions) is presented with language-specific examples and detection patterns. Includes a section on reviewing AI-generated code, which presents trust and verification challenges that traditional checklists were not designed to handle.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/everything-about-secure-code-reviews-mastering-sast-techniques-for-robust-software-d4f811d956a1" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="identity vulnerability">
+                    <span class="badge bg-amber-500/15 text-amber-400 border-amber-500/20">Vulnerability Research</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Password Managers: The Need, the Breaches, and the Story Behind My CVE (CVE-2021-31857)</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">A first-person account of discovering and responsibly disclosing CVE-2021-31857 in a widely-used password manager. The article contextualizes password managers within the broader credential security landscape, analyzing major product breaches and the case for using them despite known risks. The full vulnerability research methodology is detailed: test environment setup, flaw identification, vendor coordination, and public disclosure.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/password-managers-the-need-the-breaches-and-the-story-behind-my-cve-cve-2021-31857-ae288c6049fc" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="appsec threat-modeling">
+                    <span class="badge bg-emerald-500/15 text-emerald-400 border-emerald-500/20">Threat Modeling</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Why Threat Modeling Is Security's Compass</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Makes the case for threat modeling as a foundational security practice, covering major methodologies (STRIDE, PASTA, LINDDUN, VAST) with practical guidance on selecting the right approach by context and team size. Common objections (too time-consuming, requires experts, only useful at design time) are addressed with scaled templates, automation tools, and continuous threat modeling patterns for agile delivery.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/why-threat-modeling-is-securitys-compass-288ee6fcc59f" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="soc detection">
+                    <span class="badge bg-cyan-500/15 text-cyan-400 border-cyan-500/20">SOC &amp; Detection</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Logging in the Dark: How Security Teams Keep Every Byte, Yet Miss the Story</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Explores the paradox where enterprises store terabytes of logs yet routinely fail to detect breaches because logging is driven by compliance requirements rather than detection objectives. Three breach case studies (a major retailer, a credit bureau, and a multinational bank) each show how missing or misconfigured log sources extended attacker dwell time. A seven-step playbook surfaces log sources routinely overlooked: DNS resolvers, webhook audit logs, Sysmon events, and cloud role-assumption API calls.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/@purplesecurity/logging-in-the-dark-how-security-teams-keep-every-byte-yet-miss-the-story-fed43663fae1" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="ai-security">
+                    <span class="badge bg-blue-500/15 text-blue-400 border-blue-500/20">AI Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Cybersecurity in 2025: Leveraging AI Without Losing Control</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Examines AI in cybersecurity as a capability used by both defenders and attackers, providing a framework for organizations to harness it without creating new blind spots. Practical AI use cases in threat detection, SOC automation, vulnerability prioritization, and phishing simulation are covered alongside the risks: overconfidence from automated tools and AI-generated code vulnerabilities. Governance recommendations cover AI-specific security policies, model validation requirements, and human oversight thresholds.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/cybersecurity-in-2025-leveraging-ai-without-losing-control-36cc269a9f40" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="malware mobile">
+                    <span class="badge bg-rose-500/15 text-rose-400 border-rose-500/20">Mobile Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Hacked in Your Hand: The Fight Against Mobile Malware</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Covers the mobile malware landscape: how attackers embed malicious payloads inside legitimate-looking utilities, fake updates, and weaponized links targeting both Android and iOS. Attack vectors including trojanized apps, SMS phishing, overlay attacks stealing banking credentials, and mobile RATs are analyzed. Defense strategies span MDM policies, app vetting frameworks, behavioral on-device detection, and network-layer controls for organizations securing mobile-heavy workforces.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/hacked-in-your-hand-the-fight-against-mobile-malware-fed1bb92083d" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="web-security bot-mitigation">
+                    <span class="badge bg-orange-500/15 text-orange-400 border-orange-500/20">Web Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Bad Bots: The Unseen Cyber Threat and the Fight to Secure the Internet</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Covers the automated bot threat landscape including credential stuffing, content scraping, inventory hoarding, fake account creation, and API abuse, and explains why traditional controls consistently fail against sophisticated bot operators. Business impact across industries is quantified and the detection arms race between bot operators and mitigation vendors is explored. A layered mitigation strategy covers CAPTCHA, device fingerprinting, behavioral analytics, and threat intelligence sharing.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/bad-bots-the-unseen-cyber-threat-and-the-fight-to-secure-the-internet-9ae6e0d1ef23" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="web-security phishing">
+                    <span class="badge bg-rose-500/15 text-rose-400 border-rose-500/20">Email Security</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Why Traditional Phishing Trainings Fail and How Firewalls Fill the Gap</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Challenges click-rate-based phishing simulation programs, citing research showing training alone produces minimal long-term behavioral change. The improving quality of AI-powered spear-phishing is analyzed alongside cognitive biases that make the human layer persistently exploitable. A technical countermeasure framework centered on email security gateways, DNS-based filtering, and browser isolation argues for shifting primary reliance to technical prevention rather than user training.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/why-traditional-phishing-trainings-fail-and-how-firewalls-fill-the-gap-3bb82b7b988b" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+                <div class="pub-card glass-card rounded-2xl p-5 flex flex-col gap-3" data-tags="soc incident-response">
+                    <span class="badge bg-cyan-500/15 text-cyan-400 border-cyan-500/20">SOC &amp; SOAR</span>
+                    <h3 class="text-sm font-bold text-white leading-snug">Why a SOAR Team Is Critical for Managing Cyber Security Attacks</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed flex-grow">Makes the operational case for SOAR as a force-multiplier for overstretched security teams, focusing on the human element that separates effective deployments from shelf-ware. Playbook design principles, integration patterns with SIEM, EDR, and threat intel platforms, and the role of a dedicated SOAR engineering team in maintaining automation are covered. Covers time-to-containment improvements across phishing, ransomware precursors, and insider threats in operationalized SOAR deployments.</p>
+                    <div class="flex justify-end pt-3 border-t border-white/5 mt-auto">
+                        <a href="https://medium.com/bugbountywriteup/why-a-soar-team-is-critical-for-managing-cyber-security-attacks-b6d7633854da" target="_blank" rel="noopener" class="px-3 py-1.5 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/30 rounded-lg text-xs font-bold text-white transition-all flex items-center gap-1">Read <i class="fas fa-external-link-alt text-[9px]"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-24 pt-12 border-t border-white/5 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">
+
+                </div>
+                <div class="flex gap-8 text-sm">
+                    <a href="https://github.com/purplesectools" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                    <a href="https://x.com/just_infosec_" target="_blank" class="text-slate-400 hover:text-white transition-colors">
+                        <i class="fa-brands fa-x-twitter mr-1"></i> X/Twitter
+                    </a>
+                    <a href="mailto:purplesecuritylabs@gmail.com" class="text-slate-400 hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('nav-' + tab).classList.add('active');
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('section-' + tab).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        function filterPubs(tag) {
+            document.querySelectorAll('.pub-filter').forEach(btn => {
+                btn.classList.remove('active-filter');
+                btn.classList.add('text-slate-400');
+                btn.classList.remove('text-white');
+            });
+            const activeBtn = document.querySelector(`[data-filter="${tag}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-filter', 'text-white');
+                activeBtn.classList.remove('text-slate-400');
+            }
+            document.querySelectorAll('.pub-card').forEach(card => {
+                if (tag === 'all' || card.dataset.tags.includes(tag)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
